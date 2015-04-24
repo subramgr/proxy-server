@@ -11,6 +11,9 @@ let destinationUrl = argv.url || scheme + argv.host + ':' + port
 http.createServer((req, res) => {
   	console.log(`Proxying request to: ${destinationUrl + req.url}`)
   	let url = destinationUrl
+  	if (req.headers['x-destination-url']) {
+  		url = req.headers['x-destination-url']
+  	}
   	let options = {
     	headers: req.headers,
     	url: url + req.url
